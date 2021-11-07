@@ -24,6 +24,7 @@ static const uint16_t SUPPORTED_CHIP_IDS[] =
   0x0414,
   0x0413,
   0x0440,
+  0x0444,
   0
 };
 
@@ -48,7 +49,7 @@ static void writeh_progress( u32 wrote )
 
   if( pwrite >= expected_next )
   {
-    printf( "%d%% ", expected_next );
+    printf("%d%%\n", expected_next );
     expected_next += 10;
   }
 }
@@ -63,7 +64,7 @@ int main( int argc, const char **argv )
   u8 minor, major;
   u16 version;
   long baud;
- 
+
   // Argument validation
   if( argc < 4 )
   {
@@ -154,13 +155,13 @@ int main( int argc, const char **argv )
   if( not_flashing == 0 )
   {
     // Write unprotect
-    if( stm32_write_unprotect() != STM32_OK )
-    {
-      fprintf( stderr, "Unable to execute write unprotect\n" );
-      exit( 1 );
-    }
-    else
-      printf( "Cleared write protection.\n" );
+//    if( stm32_write_unprotect() != STM32_OK )
+//    {
+//      fprintf( stderr, "Unable to execute write unprotect\n" );
+//      exit( 1 );
+//    }
+//    else
+//      printf( "Cleared write protection.\n" );
 
     // Erase flash
     if( major == 3 )
@@ -187,7 +188,7 @@ int main( int argc, const char **argv )
 
     // Program flash
     setbuf( stdout, NULL );
-    printf( "Programming flash ... ");
+    printf( "Programming flash ...\n");
     if( stm32_write_flash( writeh_read_data, writeh_progress ) != STM32_OK )
     {
       fprintf( stderr, "Unable to program FLASH memory.\n" );
